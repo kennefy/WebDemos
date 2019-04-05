@@ -1,0 +1,48 @@
+ /* NAV STYLES */
+       @import "navbar.css";
+		@import "footer.css";
+
+		body
+		{
+		position: relative;
+		color: rgba(111,109,109,1.00);
+		padding: 0px, 20px, 0px, 20px;
+		height: 100%;
+			
+			
+		}
+
+		.container
+		{
+			min-height: 750px;
+			padding-bottom:65px;
+		}
+
+
+        #jumbotronHome {
+
+            background-image: URL("../../IMG/jumbo2%20-%20MID.png");
+            background-size: cover;
+        }
+
+		 #jumbotronSignIn {
+
+           background-color: cyan;
+           background-size: cover;
+        }
+
+        .jumbotron hr {
+            border-color: white;
+        }
+
+		a.pageLink
+		{
+			color: rgb(244,142,168);
+		}
+	
+		a.pageLink:hover
+		{
+			color: rgb(16,23,29);
+		}
+
+        
