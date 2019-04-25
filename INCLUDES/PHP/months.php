@@ -1,7 +1,10 @@
 <?php
 
+//Name references for Calender Months
 $months = array('Jan','Feb','Mar','Apr','May','Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
 
+// lists the days in each calender month
+// leap years are handled in input with a special case
 $monthLength = array(1=>31,
                      2=>28,
                      3=>31,

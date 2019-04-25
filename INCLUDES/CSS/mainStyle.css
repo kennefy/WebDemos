@@ -45,4 +45,15 @@
 			color: rgb(16,23,29);
 		}
 
+		span.errMsg 
+		{
+			
+			color: rgb(255, 99, 71) !important;
+			
+		}
+		.errBox
+		{
+			border-color:rgb(255, 99, 71);
+		}
+
         

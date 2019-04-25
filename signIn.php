@@ -11,7 +11,8 @@ session_start();
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
@@ -36,12 +37,14 @@ session_start();
 			  <div class="form-group">
 				<form method="post" id="signinForm">
 				<label for="username">Username</label>
-				<input type="username" class="form-control" id="username" placeholder="Username or Email" name="username" value="<?php echo $username; ?>">
+				<span class="errMsg" id="usernameErr"></span>
+				<input type="username" class="form-control" id="usernameInput" placeholder="Username or Email" name="username" value="<?php echo $username; ?>">
 
 			  </div>
 			  <div class="form-group">
 				<label for="password">Password</label>
-				<input type="password" class="form-control" id="password" placeholder="Password" name="password">
+				 <span class="errMsg" id="passwordErr"></span>
+				<input type="password" class="form-control" id="passwordInput" placeholder="Password" name="password">
 			  </div>
 			  <div class="form-group form-check">
 				<input type="checkbox" class="form-check-input" id="exampleCheck1">
@@ -59,5 +62,54 @@ session_start();
 
             <?php include'INCLUDES/PHP/footer.php'; ?>
         </div>
+	
+	<script type="text/javascript">
+		
+	
+		
+		$("#signinForm").submit(function()
+		 {
+			
+			var errCount = 0;
+			console.log($("#usernameInput").val());
+			console.log($("#usernameInput").val().length);
+			
+			if($("#passwordInput").val().length < 1)
+				{
+					$("#passwordInput").addClass("border border-danger");
+					errCount +=1;
+				}
+			else if($("#passwordInput").val().length <= 5)
+				{
+					$("#passwordErr").text(" - Password is too short");
+					$("#passwordErr").addClass("text-danger");
+					$("#passwordInput").addClass("border border-danger");
+					console.log("Password Error");
+					errCount +=1;
+				}
+			
+			
+			if($("#usernameInput").val().length < 1)
+				{
+					
+					$("#usernameInput").addClass("border border-danger");
+					errCount +=1;
+				}
+				
+			
+			if(errCount > 0)
+				{
+					return false;
+				}
+			else 
+				{
+					
+					console.log("Valid Input");
+					return true;
+				}
+			
+		});
+	
+	</script>
 </body>
 </html>

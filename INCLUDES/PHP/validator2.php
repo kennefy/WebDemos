@@ -8,7 +8,22 @@ include_once "globals.inc.php";
 
 if(!isset($error->exists))
 {
-	//Checks to see if an error message box has  not been created  and if not creates one.
+	/*
+	* Written By
+	Kenny Montgomery
+	* Function -
+		checks when page is loaded if an error message box has been created by checking if an object $error has a public member variable of exists as true and if not creates message box oject $error.
+		Required for passing user message flags 
+	* Parameters - 
+		
+	* CALLS -
+	
+	* Returns - 
+		
+	* Last Edit - 
+	19/01/2019
+	*/
+	
 	$error = new messageBox();
 	$error->setBoxType('error', 'Sorry There Was A Problem', 'Please fix the errors below');
 }
@@ -29,7 +44,21 @@ function cleanInputString($s){
 }
 
 function checkEmpty($s){
-    // logical check to see if value is empty
+	/*
+	* Written By
+	Kenny Montgomery
+	* Function -
+		logical check to see if value is empty
+	* Parameters - 
+		$s - String to be checked
+	* CALLS -
+	
+	* Returns - 
+		Boolean
+	* Last Edit - 
+	19/01/2019
+	*/
+    // 
     if(!isset($s)){
         
         return true;
@@ -41,8 +70,24 @@ function checkEmpty($s){
 }
 
 function checkEmptyStringReturnMessage($s, $message){
+	/*
+	* WRITTEN BY
+	Kenny Montgomery
+	* FUNCTION -
+		checks to see if value is empty and if it is adds error message to the error array
+	* PARAMETERS - 
+		REQUIRES Global $error messageBox Object
+		$s - String to be checked
+		$message  - message string passes to $error to be diplayed if $s empty
+	* CALLS - 
+	
+	* RETURNS - 
+		Boolean
+	* LAST EDIT - 
+	19/01/2019
+	*/
 	global $error;
-    // checks to see if value is empty and if it is adds error message to the error array
+    
     if(!isset($s)){
         
         
@@ -56,8 +101,26 @@ function checkEmptyStringReturnMessage($s, $message){
 }
 
 function checkMatchReturnMessage($s1, $s2, $message){
+	/*
+	* WRITTEN BY
+	Kenny Montgomery
+	* FUNCTION -
+		checks to see if two strings match if false adds error message to the error array
+	* PARAMETERS - 
+		REQUIRES Global $error messageBox Object
+		$s1 - String to be checked
+		$s2 - String to be checked against $s1
+		$message  - message string passes to $error to be diplayed if $s empty
+	* CALLS - 
+	
+	* RETURNS- 
+		Boolean
+	* LAST EDIT - 
+	19/01/2019
+	*/
+	
 	global $error;
-    // checks to see if two string match if false returns message string 
+   
     if($s1 != $s2){
         
         $error->addFlag($message);
@@ -71,10 +134,24 @@ function checkMatchReturnMessage($s1, $s2, $message){
 }
 
 function checkStrLength($s, $min, $max){
-    //checks a string is a certain length
+	/*
+	* WRITTEN BY
+	Kenny Montgomery
+	* FUNCTION -
+		gets the length of a supplied string and checks the value is between two supplied limits. if it is not then false will be returned. This should be used for logical error checking
+	* PARAMETERS - 
+		$s - String to be checked
+		$min - Int value of the lower limit 
+		$max  - Int value of the max limit
+	* RETURNS- 
+		Boolean if false
+	* LAST EDIT - 
+	19/01/2019
+	*/
+    //
     
     $i = strlen($s);
-        
+	    
     if($i < $min or $i > $max){
         
         return false;
@@ -83,47 +160,91 @@ function checkStrLength($s, $min, $max){
     
 }
 	function checkStrLengthReturnMessage($s, $min, $max, $message){
-    //checks a string is a certain length and adds error message to flags array
+	/*
+	* WRITTEN BY
+	Kenny Montgomery
+	* FUNCTION -
+		Checks that the values supplied $min is less than $max if not passes a message on to error messageBox Object
+		gets the length of a supplied string and checks the value is between two supplied limits. if it is not then false will be returned and passed message will be sent to error messageBox Object
+	* PARAMETERS -
+		REQUIRES Global $error messageBox Object
+		$s - String to be checked
+		$min - Int value of the lower limit 
+		$max  - Int value of the max limit
+		$message - The error string to be shown if value is invalid
+	* CALLS - 
+	
+	* RETURNS- 
+		Boolean if false that $min is less than $max
+		Boolean if false that $string length is more than $min
+		Boolean if false that $string length is less than $max
+		Boolean if true that $string length is more then $min and less than $max
+	* LAST EDIT - 
+	19/01/2019
+	*/
     
 	global $error;
 		
-    $i = strlen($s);
+		if($min >= $max)
+		{
+			$message .="INVALID INPUT - CHECK LIMITS";
         
-    if($i < $min){
-		
-		$message .=" small, it must be at least ".$min." in length";
+        	$error->addFlag($message);
+			return false;
+		}
+		else
+		{
+			$i = strlen($s);
         
-        $error->addFlag($message);
-		return false;
-        
-    }
-	elseif($i > $max){
+			if($i < $min){
 
-		$message .=" big, it must be at least ".$max." in length";
+				$message .=" small, it must be at least ".$min." in length";
 
-		$error->addFlag($message);
-		return false;
+				$error->addFlag($message);
+				return false;
 
-	}
-	else{
-			
-		return true;
-	}
-    
+			}
+			elseif($i > $max){
+
+				$message .=" big, it must be at least ".$max." in length";
+
+				$error->addFlag($message);
+				return false;
+
+			}
+			else{
+
+				return true;
+			}
+		} 
 }
 
 function checkMaxArrayLength($array)
 {
+	/*
+	* WRITTEN BY
+	Kenny Montgomery
+	* FUNCTION -
+		Checks for the longest string in an array
+		default length starts out as 0 and for each item in the array if it is longer it becomes the value to be checked against
+	* PARAMETERS -
+		$array - an array of strings 
+	* CALLS - 
+	
+	* RETURNS- 
+		Int of longest string in the array
+
+	* LAST EDIT - 
+	19/01/2019
+	*/
 	
 	$MaxLength = 0;
-	$Name;
 	
 	foreach($array as $item)
 	{
 		if(strlen($item)>$MaxLength)
 		{
 			$MaxLength = strlen($item);
-			$Name = $item;
 		}
 	}
 	return $MaxLength;
@@ -132,8 +253,22 @@ function checkMaxArrayLength($array)
 
 //*****INT CHECKS*****//
 function checkNumber($i){
-    // checks if input is numerical, allows decimal, floal, binary, hex
-    
+	/*
+	* WRITTEN BY
+	Kenny Montgomery
+	* FUNCTION -
+		checks if input is numerical, allows decimal, floal, binary, hex
+	* PARAMETERS -
+		$i - an integer 
+	* CALLS - 
+	
+	* RETURNS- 
+		Boolean
+
+	* LAST EDIT - 
+	24/04/2019 *** DEPRECIATED
+	*/
+    // 
     
     if(is_numeric($i)){
         
@@ -146,9 +281,25 @@ function checkNumber($i){
 }
 
 function checkIfNegative ($i){
+	/*
+	* WRITTEN BY
+	Kenny Montgomery
+	* FUNCTION -
+		checks if input is above 0 numerical, allows decimal, floal, binary, hex
+		note this gives no feedback should olny be used in other checks
+	* PARAMETERS -
+		$i - an integer 
+	* CALLS - 
+	
+	* RETURNS- 
+		Boolean
+
+	* LAST EDIT - 
+	24/04/2019  - Revoved call to checkNumber and replaced with built in is_numeric
+	*/
     //checks an int is not below 0
     
-    if($i < 0 and checkNumber($i)){
+    if($i < 0 and is_numeric($i)){
         
         return true;
         
@@ -199,6 +350,7 @@ function checkWholeNumber($i){
 
 //***** Password Validation *****//
 //Password Validation message to be displayed
+//If regex chnages this should be updated to reflect 
 $passwordRequirements = '<ul>
 								<li> Must be at least 8 characters long </li>
 								<li> Must contain </li>
@@ -213,6 +365,27 @@ $passwordRequirements = '<ul>
 
 
 function validateNewPassword($password){
+	/*
+	* WRITTEN BY
+	Kenny Montgomery
+	* FUNCTION -
+		checks the supplied password is not empty
+		checks the $password parameter against each item in the $dissalowed words array if $password contains any of those words at any point within the string
+			return a message to error saying that string is not allowed
+		if valid then check against REGEX Expression as below
+		if passoword is not valid against expression return false else return true
+		
+	* PARAMETERS -
+	REQUIRES $_POST and Gloabl $error object
+		$password - a string 
+	* CALLS - 
+			checkEmpty($password)
+	* RETURNS- 
+		Boolean
+
+	* LAST EDIT - 
+	19/01/2019  
+	*/
 	
 	global $error, $_POST;
 	
@@ -224,7 +397,7 @@ function validateNewPassword($password){
 		if(checkEmpty($password) == false){
 			
 			if(strpos($password,$word)){
-				//create an error flag if password contains any of the dissalowed words
+				//create an error flag if password contains any of the dissallowed words
 				$message = $password." is not allowed";
 				$error->addFlag($message);
 
@@ -256,7 +429,7 @@ function encryptInput($s){
 function CheckNewPassword($password, $confirmPassword){
 	
 	
-	if(!checkEmptyStringReturnMessage($confirmPassword, "Confirmation Password is Empty") &! 				checkEmptyStringReturnMessage($password, "Password is Empty")){
+	if(!checkEmptyStringReturnMessage($confirmPassword, "Confirmation Password is Empty") &! checkEmptyStringReturnMessage($password, "Password is Empty")){
 		
 		if(checkMatchReturnMessage($password, $confirmPassword, "Password and Confirmation do not match")){
 			
